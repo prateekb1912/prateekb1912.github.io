@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes — Prateek Bhardwaj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="name">Prateek Bhardwaj</div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="notes.html" class="active">Notes</a>
+    <a href="resume.html">Resume</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <section class="hero" style="padding-bottom: 0;">
+    <h1 style="margin-top: 20px;">Notes</h1>
+    <p class="bio" style="margin-top: 8px;">
+      Rough, unstructured notes from things I'm learning — backend, systems, whatever's
+      in front of me that week. Written to remember, not to be polished.
+    </p>
+  </section>
+
+  <hr class="divider" style="margin-top: 8px;">
+
+  <div class="section-label">All notes</div>
+  <div id="notes-list" class="post-list" style="margin-top: 18px;"></div>
+</main>
+
+<footer class="site-footer">
+  <span>© 2026 Prateek Bhardwaj</span>
+  <span><a href="index.html">Home</a></span>
+</footer>
+
+<script src="assets/data.js"></script>
+<script>
+  const list = document.getElementById('notes-list');
+  if (NOTES.length === 0) {
+    list.innerHTML = '<div class="empty-state">Nothing logged yet — first note coming soon.</div>';
+  } else {
+    list.innerHTML = NOTES.map(p => `
+      <div class="post-row">
+        <span class="date">${p.date}</span>
+        <div>
+          <a class="title" href="notes/${p.slug}.html">${p.title}</a>
+          ${p.excerpt ? `<span class="excerpt">${p.excerpt}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+</script>
+
+</body>
+</html>

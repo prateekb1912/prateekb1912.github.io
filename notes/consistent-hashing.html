@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consistent hashing — Prateek Bhardwaj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="name">Prateek Bhardwaj</div>
+  <nav class="site-nav">
+    <a href="../index.html">Home</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../notes.html" class="active">Notes</a>
+    <a href="../resume.html">Resume</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <article class="post">
+    <div class="post-meta">August 23, 2026 · rough notes</div>
+    <h1>Consistent hashing</h1>
+
+    <p>
+      The problem it solves: with plain <code>hash(key) % N</code> sharding, adding or
+      removing a single node changes N, which remaps almost every key to a different
+      node. For a cache, that's a mass eviction. For a data store, that's a mass
+      rebalance. Consistent hashing keeps that remapping to roughly <code>1/N</code>
+      of the keys instead of nearly all of them.
+    </p>
+
+    <h2>The ring</h2>
+    <p>
+      Hash both the nodes and the keys onto the same circular space (say, 0 to 2^32-1).
+      A key belongs to the first node found walking clockwise from its position on the
+      ring. Add a node: it only takes over the keys between itself and the previous
+      node going counter-clockwise — everything else is untouched. Remove a node: its
+      keys fall to the next node clockwise, again without touching anyone else's keys.
+    </p>
+
+    <h2>Why virtual nodes</h2>
+    <p>
+      With only one point per physical node on the ring, load gets lumpy — some nodes
+      end up owning a much bigger arc than others just by hash chance, and losing a
+      node dumps its whole slice onto exactly one neighbor. The fix: give each physical
+      node many points on the ring (e.g. hash "node-A-1", "node-A-2", ... "node-A-150").
+      Now each node's ownership is a scatter of small arcs, load balances out, and a
+      failure spreads its keys across many neighbors instead of one.
+    </p>
+
+    <h2>Rough sketch</h2>
+    <pre><code>class ConsistentHashRing:
+    def __init__(self, nodes, vnodes=150):
+        self.ring = {}  # hash -> node
+        for node in nodes:
+            for i in range(vnodes):
+                h = hash(f"{node}-{i}")
+                self.ring[h] = node
+        self.sorted_hashes = sorted(self.ring)
+
+    def get_node(self, key):
+        h = hash(key)
+        for ring_hash in self.sorted_hashes:
+            if h <= ring_hash:
+                return self.ring[ring_hash]
+        return self.ring[self.sorted_hashes[0]]  # wrap around</code></pre>
+    <p>
+      (Real implementations use a sorted structure with binary search instead of a
+      linear scan — this is just the mental model.)
+    </p>
+
+    <h2>Where I've actually seen this</h2>
+    <p>
+      DynamoDB and Cassandra use it for partitioning. Memcached client libraries use
+      it for picking which cache server a key goes to, specifically so that adding or
+      removing a cache node doesn't blow away the whole cache. Worth digging into how
+      Cassandra also uses it alongside replication (each key replicated to the next
+      N-1 distinct nodes walking the ring) — that part I still need to read more on.
+    </p>
+
+    <blockquote>Open question for myself: how do virtual node counts actually get tuned in production — is 150 just a convention, or does it depend on cluster size?</blockquote>
+
+    <div class="post-footer">
+      <a href="../notes.html">← Back to all notes</a>
+    </div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <span>© 2026 Prateek Bhardwaj</span>
+  <span><a href="../index.html">Home</a></span>
+</footer>
+
+</body>
+</html>

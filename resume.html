@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Prateek Bhardwaj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="name">Prateek Bhardwaj</div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="notes.html">Notes</a>
+    <a href="resume.html" class="active">Resume</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <section class="hero" style="padding-bottom: 0;">
+    <h1 style="margin-top: 20px;">Resume</h1>
+    <p class="bio" style="margin-top: 8px;">
+      Backend engineer with 3 years of experience across high-scale consumer products
+      and AI platforms. Core stack: Python, FastAPI, Node.js, PostgreSQL/Redis,
+      distributed systems, and GenAI.
+    </p>
+    <div class="links">
+      <a href="mailto:prateekb1912@gmail.com">prateekb1912@gmail.com</a>
+      <a href="https://github.com/prateekb1912" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/prateekb1912" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="assets/Prateek_Bhardwaj_Resume.pdf" target="_blank">Download PDF</a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <div class="section-label">Experience</div>
+
+  <div class="timeline-item">
+    <div class="row">
+      <h3>Software Engineer II · Alltius</h3>
+      <span class="when">Aug 2025 — Present</span>
+    </div>
+    <ul>
+      <li>Designed and built a multi-agent system from scratch using LangGraph, including tool-use agents, a hybrid-search RAG pipeline (BM25 + dense vector retrieval), and a prompt evaluation harness to validate output before shipping to production.</li>
+      <li>Built MCP servers for clients accessed via Claude Desktop; separately built a custom agent from scratch to mimic Claude's internal MCP tool-use evaluation behavior, ahead of native agent-side MCP support.</li>
+      <li>Built a second agentic system directly on the Anthropic SDK (tool use, function calling) as an alternative orchestration path to compare reliability and control at the model layer.</li>
+      <li>Rebuilt the document ingestion pipeline across PDFs, call transcripts, and emails from large S3 sources, using Temporal for durable workflow orchestration.</li>
+      <li>Added incremental ingestion and checkpoint-based retry, so a failed mid-run job resumes from its last checkpoint instead of re-ingesting from scratch.</li>
+    </ul>
+  </div>
+
+  <div class="timeline-item">
+    <div class="row">
+      <h3>SDE-I · Wayground</h3>
+      <span class="when">Jun 2023 — Jul 2025</span>
+    </div>
+    <ul>
+      <li>Owned the backend for the Comprehension question type — a nested question structure. Designed the MongoDB schema and built all CRUD APIs.</li>
+      <li>Led the monolith-to-microservices decoupling initiative: extracted core business logic into standalone Node.js services with API versioning and service-to-service communication patterns.</li>
+      <li>Shipped LLM-powered features to production, including quiz generation, question enhancement, and recommendations.</li>
+    </ul>
+  </div>
+
+  <div class="timeline-item">
+    <div class="row">
+      <h3>Backend Developer Intern · Microsec Pvt. Ltd.</h3>
+      <span class="when">Jan 2022 — May 2022</span>
+    </div>
+    <ul>
+      <li>Backend development internship.</li>
+    </ul>
+  </div>
+
+  <div class="section-label">Education</div>
+  <div class="timeline-item">
+    <div class="row">
+      <h3>B.Tech, Computer Science · IIIT Una</h3>
+      <span class="when">Aug 2019 — May 2023</span>
+    </div>
+  </div>
+
+  <div class="section-label">Technical skills</div>
+  <div class="skills-block" style="margin-top: 16px;">
+    <p><strong>Languages:</strong> Python, TypeScript, JavaScript, SQL (PostgreSQL, MySQL)</p>
+    <p><strong>Backend:</strong> Node.js, Express.js, FastAPI, Flask, Django, SQLAlchemy, Pydantic, Asyncio</p>
+    <p><strong>AI / GenAI:</strong> Anthropic SDK, LLMs, LangGraph, LangChain, OpenAI API, MCP, Hybrid Search (BM25 + dense/RAG), Multi-Agent Orchestration, Prompt Engineering, Eval Harness Design</p>
+    <p><strong>Databases & cache:</strong> PostgreSQL, MongoDB, Redis, MySQL</p>
+    <p><strong>Distributed systems:</strong> Temporal, SQS, Microservices Architecture</p>
+    <p><strong>DevOps & cloud:</strong> AWS (EC2, EKS, S3, CloudWatch), Kubernetes, Docker, CI/CD, Prometheus</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <span>© 2026 Prateek Bhardwaj</span>
+  <span><a href="index.html">Home</a></span>
+</footer>
+
+</body>
+</html>
